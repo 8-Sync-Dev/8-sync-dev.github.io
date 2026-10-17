@@ -1,0 +1,11 @@
+#!/bin/sh
+# 8sync moved: the installer now lives at https://get.8syncdev.com/install
+# (repo renamed 8-Sync-Dev/su-code -> 8-Sync-Dev/8sync). This shim keeps the
+# old one-liner working by running the current installer with the same arguments.
+set -eu
+url=https://get.8syncdev.com/install
+if command -v curl >/dev/null 2>&1; then
+  curl -fsSL --proto '=https' --tlsv1.2 "$url" | sh -s -- "$@"
+else
+  wget -qO- "$url" | sh -s -- "$@"
+fi
